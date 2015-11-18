@@ -3,18 +3,26 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Post Message Bus</title>
+    <button onclick="openWindow();">open window</button>
 	</head>
 	<body>
 		<script src="src/bus.js"></script>
-		<script>
+    <script>
       var bus = new PostMessageBus();
-      var dest = window.open("http://www.reddit.com");
-      bus.add(dest).then(function(resp) {
-        console.log(resp);
+      bus.listen(function(msg) {
+        console.log('wat', msg);
       })
-      .catch(function(e) {
-        console.error(e);
-      });
+    </script>
+    <script>
+      function openWindow() {
+        var dest = window.open("http://localhost:3000");
+        bus.add(dest).then(function(resp) {
+          console.log(resp);
+        })
+        .catch(function(e) {
+          console.error(e);
+        });
+      }
     </script>
 	</body>
 </html>
