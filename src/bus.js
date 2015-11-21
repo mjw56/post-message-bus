@@ -21,6 +21,7 @@ PostMessageBus.prototype.add = function(destination) {
       } else {
         window.removeEventListener('message', listen, false);
         clearInterval(id);
+        resolve('connected');
       }
     }, 500);
   });
@@ -28,6 +29,10 @@ PostMessageBus.prototype.add = function(destination) {
 
 PostMessageBus.prototype.listen = function(cb) {
   window.addEventListener('message', this.handleMessage.bind(this, cb))
+}
+
+PostMessageBus.prototype.destroy = function(cb) {
+  window.removeEventListener('message', this.handleMessage.bind(this, cb))
 }
 
 PostMessageBus.prototype.handleMessage = function(cb, e) {
